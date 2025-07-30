@@ -2,57 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* L.U.A.S Professional Appraisal System Design Tokens */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Background & Surface Colors */
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
+    /* Professional Blue Primary Palette */
+    --primary: 215 85% 35%;
     --primary-foreground: 210 40% 98%;
+    --primary-glow: 215 85% 45%;
+    --primary-soft: 215 75% 92%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Sophisticated Secondary Palette */
+    --secondary: 215 15% 95%;
+    --secondary-foreground: 215 25% 25%;
+    --secondary-dark: 215 20% 85%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Elegant Muted Tones */
+    --muted: 215 15% 96%;
+    --muted-foreground: 215 15% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Professional Accent */
+    --accent: 195 85% 45%;
+    --accent-foreground: 210 40% 98%;
+    --accent-soft: 195 75% 92%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status Colors */
+    --success: 145 85% 35%;
+    --success-foreground: 145 85% 95%;
+    --warning: 45 85% 55%;
+    --warning-foreground: 45 85% 15%;
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 85% 95%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* UI Elements */
+    --border: 215 15% 88%;
+    --input: 215 15% 92%;
+    --ring: 215 85% 35%;
 
-    --radius: 0.5rem;
+    /* Professional Border Radius */
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Professional Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-soft: linear-gradient(135deg, hsl(var(--primary-soft)), hsl(var(--accent-soft)));
+    --gradient-background: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Professional Shadows */
+    --shadow-elegant: 0 4px 20px -4px hsl(var(--primary) / 0.15);
+    --shadow-soft: 0 2px 10px -2px hsl(var(--foreground) / 0.08);
+    --shadow-glow: 0 0 30px hsl(var(--primary-glow) / 0.2);
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Professional Sidebar Colors */
+    --sidebar-background: 215 25% 8%;
+    --sidebar-foreground: 215 15% 85%;
+    --sidebar-primary: 215 85% 45%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 215 25% 12%;
+    --sidebar-accent-foreground: 215 15% 85%;
+    --sidebar-border: 215 25% 15%;
+    --sidebar-ring: 215 85% 45%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Professional Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
