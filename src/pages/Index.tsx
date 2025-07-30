@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { Dashboard } from "./Dashboard";
-import { AppraisalsPage } from "./AppraisalsPage";
+import { StaffAppraisalsPage } from "./StaffAppraisalsPage";
 import { CalculationsPage } from "./CalculationsPage";
 import { ReportsPage } from "./ReportsPage";
 import { DataPage } from "./DataPage";
@@ -16,7 +16,7 @@ const Index = () => {
       case "dashboard":
         return <Dashboard />;
       case "appraisals":
-        return <AppraisalsPage />;
+        return <StaffAppraisalsPage />;
       case "calculations":
         return <CalculationsPage />;
       case "reports":
@@ -35,13 +35,13 @@ const Index = () => {
       case "dashboard":
         return "Dashboard";
       case "appraisals":
-        return "Property Appraisals";
+        return "Staff Performance Appraisals";
       case "calculations":
-        return "Calculation Tools";
+        return "Performance Calculation Tools";
       case "reports":
-        return "Reports & Analytics";
+        return "Performance Reports & Analytics";
       case "data":
-        return "Data Management";
+        return "Employee Data Management";
       case "settings":
         return "Settings";
       default:
@@ -52,15 +52,15 @@ const Index = () => {
   const getPageSubtitle = () => {
     switch (currentPage) {
       case "dashboard":
-        return "Overview of your appraisal activities and key metrics";
+        return "Overview of staff performance metrics and organizational KPIs";
       case "appraisals":
-        return "Create and manage property appraisals";
+        return "Create and manage staff performance appraisals";
       case "calculations":
-        return "Professional tools for property valuation calculations";
+        return "Professional tools for performance rating calculations";
       case "reports":
-        return "Generate and manage appraisal reports";
+        return "Generate and manage staff performance reports";
       case "data":
-        return "Manage your property database and records";
+        return "Manage your employee database and HR records";
       case "settings":
         return "Configure your account and system preferences";
       default:

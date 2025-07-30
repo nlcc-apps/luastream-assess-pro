@@ -19,10 +19,10 @@ interface SidebarProps {
 
 const navigationItems = [
   { id: "dashboard", label: "Dashboard", icon: Home },
-  { id: "appraisals", label: "Appraisals", icon: FileText },
-  { id: "calculations", label: "Calculations", icon: Calculator },
-  { id: "reports", label: "Reports", icon: BarChart3 },
-  { id: "data", label: "Data Management", icon: Database },
+  { id: "appraisals", label: "Staff Appraisals", icon: FileText },
+  { id: "calculations", label: "KPI Calculator", icon: Calculator },
+  { id: "reports", label: "Performance Reports", icon: BarChart3 },
+  { id: "data", label: "Employee Data", icon: Database },
   { id: "settings", label: "Settings", icon: Settings },
 ];
 
@@ -44,7 +44,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
               </div>
               <div>
                 <h1 className="text-sidebar-foreground font-bold text-lg">L.U.A.S</h1>
-                <p className="text-sidebar-foreground/60 text-xs">Appraisal System</p>
+                <p className="text-sidebar-foreground/60 text-xs">Staff KPI System</p>
               </div>
             </div>
           )}

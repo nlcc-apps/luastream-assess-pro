@@ -16,36 +16,36 @@ export function Dashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
-          title="Total Appraisals"
-          value="247"
-          change="+12% from last month"
+          title="Staff Appraisals"
+          value="142"
+          change="+8% from last quarter"
           changeType="positive"
           icon={FileText}
-          description="Completed this month"
+          description="Completed this quarter"
         />
         <StatCard
-          title="Average Value"
-          value="$425,000"
-          change="+3.2% from last month"
+          title="Average Rating"
+          value="4.2/5"
+          change="+0.3 from last quarter"
           changeType="positive"
           icon={DollarSign}
-          description="Property valuations"
+          description="Overall performance rating"
         />
         <StatCard
-          title="Processing Time"
-          value="2.4 days"
-          change="-15% improvement"
+          title="Review Completion"
+          value="89%"
+          change="+12% improvement"
           changeType="positive"
           icon={Clock}
-          description="Average completion time"
+          description="On-time completion rate"
         />
         <StatCard
-          title="Success Rate"
-          value="96.8%"
-          change="+0.8% from last month"
+          title="Employee Satisfaction"
+          value="92%"
+          change="+5% from last survey"
           changeType="positive"
           icon={TrendingUp}
-          description="Approved appraisals"
+          description="Post-appraisal feedback"
         />
       </div>
 
@@ -58,15 +58,15 @@ export function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Button className="h-24 flex flex-col space-y-2" variant="outline">
               <Plus className="h-6 w-6" />
-              <span>New Appraisal</span>
+              <span>New Staff Appraisal</span>
             </Button>
             <Button className="h-24 flex flex-col space-y-2" variant="outline">
               <BarChart3 className="h-6 w-6" />
-              <span>View Reports</span>
+              <span>Performance Reports</span>
             </Button>
             <Button className="h-24 flex flex-col space-y-2" variant="outline">
               <FileText className="h-6 w-6" />
-              <span>Recent Files</span>
+              <span>Employee Records</span>
             </Button>
           </div>
         </CardContent>
@@ -76,22 +76,22 @@ export function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Recent Appraisals</CardTitle>
+            <CardTitle>Recent Staff Appraisals</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {[
-                { id: "APR-001", address: "123 Main St, Anytown", value: "$385,000", status: "Completed" },
-                { id: "APR-002", address: "456 Oak Ave, Springfield", value: "$520,000", status: "In Progress" },
-                { id: "APR-003", address: "789 Pine Rd, Downtown", value: "$295,000", status: "Review" },
+                { id: "SA-001", employee: "John Smith - Software Engineer", rating: "4.5/5", status: "Completed" },
+                { id: "SA-002", employee: "Sarah Johnson - Marketing Manager", rating: "4.2/5", status: "In Progress" },
+                { id: "SA-003", employee: "Mike Davis - Sales Representative", rating: "3.8/5", status: "Review" },
               ].map((appraisal) => (
                 <div key={appraisal.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                   <div>
                     <p className="font-medium">{appraisal.id}</p>
-                    <p className="text-sm text-muted-foreground">{appraisal.address}</p>
+                    <p className="text-sm text-muted-foreground">{appraisal.employee}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold">{appraisal.value}</p>
+                    <p className="font-bold">{appraisal.rating}</p>
                     <p className="text-sm text-muted-foreground">{appraisal.status}</p>
                   </div>
                 </div>
@@ -102,22 +102,22 @@ export function Dashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Market Trends</CardTitle>
+            <CardTitle>Department Performance</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {[
-                { area: "Downtown", trend: "+5.2%", value: "$450K avg" },
-                { area: "Suburbs", trend: "+3.8%", value: "$385K avg" },
-                { area: "Waterfront", trend: "+8.1%", value: "$675K avg" },
-              ].map((trend) => (
-                <div key={trend.area} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                { department: "Engineering", avgRating: "4.3/5", employees: "24 employees" },
+                { department: "Marketing", avgRating: "4.1/5", employees: "18 employees" },
+                { department: "Sales", avgRating: "4.5/5", employees: "32 employees" },
+              ].map((dept) => (
+                <div key={dept.department} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                   <div>
-                    <p className="font-medium">{trend.area}</p>
-                    <p className="text-sm text-muted-foreground">{trend.value}</p>
+                    <p className="font-medium">{dept.department}</p>
+                    <p className="text-sm text-muted-foreground">{dept.employees}</p>
                   </div>
                   <div className="text-success font-bold">
-                    {trend.trend}
+                    {dept.avgRating}
                   </div>
                 </div>
               ))}

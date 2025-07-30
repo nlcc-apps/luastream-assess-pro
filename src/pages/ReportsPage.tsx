@@ -7,27 +7,27 @@ export function ReportsPage() {
   const reports = [
     {
       id: "RPT-001",
-      title: "Residential Property Appraisal",
-      property: "123 Main St, Anytown",
+      title: "Quarterly Performance Review",
+      employee: "John Smith - Software Engineer",
       date: "2024-01-15",
       status: "completed",
-      value: "$385,000"
+      rating: "4.5/5"
     },
     {
       id: "RPT-002", 
-      title: "Commercial Building Assessment",
-      property: "456 Business Blvd, Downtown",
+      title: "Annual Performance Assessment",
+      employee: "Sarah Johnson - Marketing Manager",
       date: "2024-01-14",
       status: "pending",
-      value: "$1,250,000"
+      rating: "4.2/5"
     },
     {
       id: "RPT-003",
-      title: "Land Valuation Report",
-      property: "789 Rural Rd, Countryside",
+      title: "Probation Review Report",
+      employee: "Mike Davis - Sales Representative",
       date: "2024-01-12",
       status: "completed",
-      value: "$95,000"
+      rating: "3.8/5"
     }
   ];
 
@@ -52,16 +52,16 @@ export function ReportsPage() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-success/10 rounded-lg">
-              <p className="text-2xl font-bold text-success">12</p>
-              <p className="text-sm text-muted-foreground">Completed Reports</p>
+              <p className="text-2xl font-bold text-success">89</p>
+              <p className="text-sm text-muted-foreground">Completed Reviews</p>
             </div>
             <div className="text-center p-4 bg-warning/10 rounded-lg">
-              <p className="text-2xl font-bold text-warning">3</p>
-              <p className="text-sm text-muted-foreground">Pending Reports</p>
+              <p className="text-2xl font-bold text-warning">12</p>
+              <p className="text-sm text-muted-foreground">Pending Reviews</p>
             </div>
             <div className="text-center p-4 bg-primary/10 rounded-lg">
-              <p className="text-2xl font-bold text-primary">$3.2M</p>
-              <p className="text-sm text-muted-foreground">Total Appraised Value</p>
+              <p className="text-2xl font-bold text-primary">4.2</p>
+              <p className="text-sm text-muted-foreground">Average Rating</p>
             </div>
           </div>
         </CardContent>
@@ -72,11 +72,11 @@ export function ReportsPage() {
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <FileText className="h-5 w-5" />
-              <span>Recent Reports</span>
+              <span>Performance Reports</span>
             </div>
             <Button>
               <FileText className="h-4 w-4 mr-2" />
-              New Report
+              New Performance Report
             </Button>
           </CardTitle>
         </CardHeader>
@@ -91,13 +91,13 @@ export function ReportsPage() {
                       {report.status}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">{report.property}</p>
+                  <p className="text-sm text-muted-foreground">{report.employee}</p>
                   <p className="text-xs text-muted-foreground">Generated: {report.date}</p>
                 </div>
                 
                 <div className="flex items-center space-x-4">
                   <div className="text-right">
-                    <p className="font-bold">{report.value}</p>
+                    <p className="font-bold">{report.rating}</p>
                     <p className="text-sm text-muted-foreground">{report.id}</p>
                   </div>
                   

@@ -8,50 +8,51 @@ import { Search, Filter, Download, Plus, Database } from "lucide-react";
 export function DataPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const properties = [
+  const employees = [
     {
-      id: "PROP-001",
-      address: "123 Main St, Anytown",
-      type: "Residential",
-      sqft: "2,400",
-      value: "$385,000",
-      lastAppraised: "2024-01-15",
+      id: "EMP-001",
+      name: "John Smith",
+      position: "Software Engineer",
+      department: "Engineering",
+      rating: "4.5/5",
+      lastReview: "2024-01-15",
       status: "active"
     },
     {
-      id: "PROP-002",
-      address: "456 Business Blvd, Downtown", 
-      type: "Commercial",
-      sqft: "15,000",
-      value: "$1,250,000",
-      lastAppraised: "2024-01-14",
+      id: "EMP-002",
+      name: "Sarah Johnson", 
+      position: "Marketing Manager",
+      department: "Marketing",
+      rating: "4.2/5",
+      lastReview: "2024-01-14",
       status: "active"
     },
     {
-      id: "PROP-003",
-      address: "789 Rural Rd, Countryside",
-      type: "Land",
-      sqft: "43,560",
-      value: "$95,000", 
-      lastAppraised: "2024-01-12",
-      status: "archived"
+      id: "EMP-003",
+      name: "Mike Davis",
+      position: "Sales Representative",
+      department: "Sales",
+      rating: "3.8/5",
+      lastReview: "2024-01-12",
+      status: "on-leave"
     }
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active": return "success";
-      case "pending": return "warning";
-      case "archived": return "secondary";
+      case "on-leave": return "warning";
+      case "terminated": return "destructive";
       default: return "secondary";
     }
   };
 
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case "Residential": return "primary";
-      case "Commercial": return "accent";
-      case "Land": return "secondary";
+  const getDepartmentColor = (department: string) => {
+    switch (department) {
+      case "Engineering": return "primary";
+      case "Marketing": return "accent";
+      case "Sales": return "success";
+      case "HR": return "warning";
       default: return "secondary";
     }
   };
@@ -62,7 +63,7 @@ export function DataPage() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Database className="h-5 w-5" />
-            <span>Property Database</span>
+            <span>Employee Database</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -71,7 +72,7 @@ export function DataPage() {
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search properties..."
+                  placeholder="Search employees..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -90,33 +91,34 @@ export function DataPage() {
               </Button>
               <Button>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Property
+                Add Employee
               </Button>
             </div>
           </div>
 
           <div className="space-y-4">
-            {properties
-              .filter(property => 
-                property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                property.type.toLowerCase().includes(searchQuery.toLowerCase())
+            {employees
+              .filter(employee => 
+                employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                employee.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                employee.department.toLowerCase().includes(searchQuery.toLowerCase())
               )
-              .map((property) => (
-                <div key={property.id} className="flex items-center justify-between p-4 border rounded-lg hover:shadow-soft transition-shadow">
+              .map((employee) => (
+                <div key={employee.id} className="flex items-center justify-between p-4 border rounded-lg hover:shadow-soft transition-shadow">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="font-medium">{property.address}</h3>
-                      <Badge variant={getTypeColor(property.type) as any}>
-                        {property.type}
+                      <h3 className="font-medium">{employee.name} - {employee.position}</h3>
+                      <Badge variant={getDepartmentColor(employee.department) as any}>
+                        {employee.department}
                       </Badge>
-                      <Badge variant={getStatusColor(property.status) as any}>
-                        {property.status}
+                      <Badge variant={getStatusColor(employee.status) as any}>
+                        {employee.status}
                       </Badge>
                     </div>
                     <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground">
-                      <span>Size: {property.sqft} sqft</span>
-                      <span>Value: {property.value}</span>
-                      <span>Last Appraised: {property.lastAppraised}</span>
+                      <span>ID: {employee.id}</span>
+                      <span>Rating: {employee.rating}</span>
+                      <span>Last Review: {employee.lastReview}</span>
                     </div>
                   </div>
                   
@@ -137,30 +139,30 @@ export function DataPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Total Properties</CardTitle>
+            <CardTitle>Total Employees</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">247</p>
-            <p className="text-sm text-muted-foreground">+12 this month</p>
+            <p className="text-3xl font-bold">156</p>
+            <p className="text-sm text-muted-foreground">+8 this quarter</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Active Appraisals</CardTitle>
+            <CardTitle>Pending Reviews</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">18</p>
-            <p className="text-sm text-muted-foreground">In progress</p>
+            <p className="text-3xl font-bold">12</p>
+            <p className="text-sm text-muted-foreground">Due this month</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Database Size</CardTitle>
+            <CardTitle>HR Records</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">2.4GB</p>
+            <p className="text-3xl font-bold">1.2GB</p>
             <p className="text-sm text-muted-foreground">Storage used</p>
           </CardContent>
         </Card>
