@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, Save, FileText, User } from "lucide-react";
+import { Calculator, Save, FileText, User, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { api } from "@/lib/api";
 
 interface StaffAppraisalData {
   employeeId: string;
@@ -27,8 +28,14 @@ interface StaffAppraisalData {
   comments: string;
 }
 
-export function StaffAppraisalForm() {
+interface StaffAppraisalFormProps {
+  onClose?: () => void;
+  onSuccess?: () => void;
+}
+
+export function StaffAppraisalForm({ onClose, onSuccess }: StaffAppraisalFormProps) {
   const { toast } = useToast();
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState<StaffAppraisalData>({
     employeeId: "",
     employeeName: "",
@@ -72,12 +79,41 @@ export function StaffAppraisalForm() {
     });
   };
 
-  const handleSave = () => {
-    // Here you would make API call to save the staff appraisal
-    toast({
-      title: "Appraisal Saved",
-      description: "Staff performance appraisal has been saved successfully.",
-    });
+  const handleSave = async () => {
+    setSubmitting(true);
+    
+    try {
+      await api.createStaffAppraisal({
+        employeeId: formData.employeeId,
+        employeeName: formData.employeeName,
+        position: formData.position,
+        department: formData.department,
+        reviewPeriod: formData.reviewPeriod,
+        overallRating: parseFloat(formData.overallRating) || 0,
+        goals: formData.performanceGoals,
+        achievements: formData.achievements,
+        areasForImprovement: formData.areasForImprovement,
+        additionalComments: formData.comments,
+        reviewDate: new Date().toISOString().split('T')[0],
+        reviewerName: formData.manager || "Current User",
+        status: "completed"
+      });
+      
+      toast({
+        title: "Success",
+        description: "Staff appraisal has been saved successfully.",
+      });
+      
+      onSuccess?.();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save staff appraisal. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleGenerateReport = () => {
@@ -90,6 +126,16 @@ export function StaffAppraisalForm() {
 
   return (
     <div className="space-y-6">
+      {onClose && (
+        <div className="flex items-center space-x-2 mb-4">
+          <Button variant="ghost" size="sm" onClick={onClose}>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Appraisals
+          </Button>
+        </div>
+      )}
+      
+      <div className="space-y-6">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
@@ -335,9 +381,9 @@ export function StaffAppraisalForm() {
           </div>
 
           <div className="flex space-x-4 pt-4">
-            <Button onClick={handleSave} variant="default">
+            <Button onClick={handleSave} variant="default" disabled={submitting}>
               <Save className="h-4 w-4 mr-2" />
-              Save Appraisal
+              {submitting ? "Saving..." : "Save Appraisal"}
             </Button>
             <Button onClick={handleGenerateReport} variant="secondary">
               <FileText className="h-4 w-4 mr-2" />
@@ -346,6 +392,7 @@ export function StaffAppraisalForm() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
