@@ -1,0 +1,241 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\App.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\DataPage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\DataPage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\ReportsPage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\ReportsPage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\Index.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\Index.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\layout\\Header.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\layout\\Header.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\ui\\badge.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ui\\badge.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\ManagerDashboard.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\dashboards\\ManagerDashboard.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\EmployeeDashboard.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\dashboards\\EmployeeDashboard.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\AdminDashboard.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\dashboards\\AdminDashboard.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\auth\\ProtectedRoute.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\auth\\ProtectedRoute.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\LoginPage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\LoginPage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\LandingPage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\LandingPage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\Dashboard.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\Dashboard.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 10,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ReportsPage.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\ReportsPage.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\ReportsPage.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\ReportsPage.tsx",
+              "RelativeToolTip": "src\\pages\\ReportsPage.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T09:01:41.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\Index.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\Index.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\Index.tsx",
+              "RelativeToolTip": "src\\pages\\Index.tsx",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAmwIIAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T09:01:12.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Header.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\layout\\Header.tsx",
+              "RelativeDocumentMoniker": "src\\components\\layout\\Header.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\layout\\Header.tsx",
+              "RelativeToolTip": "src\\components\\layout\\Header.tsx",
+              "ViewState": "AgIAABgAAAAAAAAAAAAmwDQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T09:00:46.624Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "badge.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\ui\\badge.tsx",
+              "RelativeDocumentMoniker": "src\\components\\ui\\badge.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\ui\\badge.tsx",
+              "RelativeToolTip": "src\\components\\ui\\badge.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T09:00:00.753Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ProtectedRoute.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\auth\\ProtectedRoute.tsx",
+              "RelativeDocumentMoniker": "src\\components\\auth\\ProtectedRoute.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\components\\auth\\ProtectedRoute.tsx",
+              "RelativeToolTip": "src\\components\\auth\\ProtectedRoute.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:55:07.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DataPage.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\DataPage.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\DataPage.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\DataPage.tsx",
+              "RelativeToolTip": "src\\pages\\DataPage.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEBAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:51:53.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "EmployeeDashboard.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\EmployeeDashboard.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\dashboards\\EmployeeDashboard.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\EmployeeDashboard.tsx",
+              "RelativeToolTip": "src\\pages\\dashboards\\EmployeeDashboard.tsx",
+              "ViewState": "AgIAAEcAAAAAAAAAAADwv1sAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:49:48.989Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ManagerDashboard.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\ManagerDashboard.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\dashboards\\ManagerDashboard.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\ManagerDashboard.tsx",
+              "RelativeToolTip": "src\\pages\\dashboards\\ManagerDashboard.tsx",
+              "ViewState": "AgIAAGIAAAAAAAAAAADwv28AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:47:42.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Dashboard.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\Dashboard.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\Dashboard.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\Dashboard.tsx",
+              "RelativeToolTip": "src\\pages\\Dashboard.tsx",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAAAK0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:45:20.446Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AdminDashboard.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\AdminDashboard.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\dashboards\\AdminDashboard.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\dashboards\\AdminDashboard.tsx",
+              "RelativeToolTip": "src\\pages\\dashboards\\AdminDashboard.tsx",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAmwKcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:44:51.249Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "App.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\App.tsx",
+              "RelativeDocumentMoniker": "src\\App.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\App.tsx",
+              "RelativeToolTip": "src\\App.tsx",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:40:51.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "LoginPage.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\LoginPage.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\LoginPage.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\LoginPage.tsx",
+              "RelativeToolTip": "src\\pages\\LoginPage.tsx",
+              "ViewState": "AgIAACwAAAAAAAAAAAAAAEkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:39:18.753Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "LandingPage.tsx",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\LandingPage.tsx",
+              "RelativeDocumentMoniker": "src\\pages\\LandingPage.tsx",
+              "ToolTip": "C:\\Users\\PC\\source\\repos\\luastream-assess-pro\\src\\pages\\LandingPage.tsx",
+              "RelativeToolTip": "src\\pages\\LandingPage.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-31T08:20:48.701Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
