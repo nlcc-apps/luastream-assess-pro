@@ -70,7 +70,7 @@ export function ReportsPage() {
     };
 
     const handleNewPerformanceReport = () => {
-        navigate('/appraisals');
+        navigate('/app/appraisals');
     };
 
     const handleViewReport = (report: PerformanceReportData) => {
@@ -166,11 +166,11 @@ export function ReportsPage() {
                                                         <Eye className="h-4 w-4" />
                                                     </Button>
                                                 </DialogTrigger>
-                                                {selectedReport && (
-                                                    <DialogContent>
-                                                        <DialogHeader>
-                                                            <DialogTitle>Performance Report</DialogTitle>
-                                                        </DialogHeader>
+                                                <DialogContent>
+                                                    <DialogHeader>
+                                                        <DialogTitle>Performance Report</DialogTitle>
+                                                    </DialogHeader>
+                                                    {selectedReport && (
                                                         <div>
                                                             <p><strong>Title:</strong> {selectedReport.title}</p>
                                                             <p><strong>Employee:</strong> {selectedReport.employeeName}</p>
@@ -180,8 +180,8 @@ export function ReportsPage() {
                                                             <p><strong>Content:</strong></p>
                                                             <p className="whitespace-pre-wrap">{selectedReport.reportContent}</p>
                                                         </div>
-                                                    </DialogContent>
-                                                )}
+                                                    )}
+                                                </DialogContent>
                                             </Dialog>
                                             <Button variant="ghost" size="icon" onClick={() => handleDownloadReport(report.id)}>
                                                 <Download className="h-4 w-4" />

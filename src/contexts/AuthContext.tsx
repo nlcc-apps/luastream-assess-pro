@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('sessionId', sessionId);
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
-    // FIX: Navigate to '/app/dashboard' which is the protected area's main page
     navigate('/app/dashboard'); 
   };
 

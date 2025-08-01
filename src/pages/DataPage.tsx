@@ -208,11 +208,11 @@ export function DataPage() {
                                                 View
                                             </Button>
                                         </DialogTrigger>
-                                        {selectedEmployee && (
-                                            <DialogContent>
-                                                <DialogHeader>
-                                                    <DialogTitle>Employee Details</DialogTitle>
-                                                </DialogHeader>
+                                        <DialogContent>
+                                            <DialogHeader>
+                                                <DialogTitle>Employee Details</DialogTitle>
+                                            </DialogHeader>
+                                            {selectedEmployee && (
                                                 <div>
                                                     <p><strong>Name:</strong> {selectedEmployee.name}</p>
                                                     <p><strong>Position:</strong> {selectedEmployee.position}</p>
@@ -221,8 +221,8 @@ export function DataPage() {
                                                     <p><strong>Rating:</strong> {selectedEmployee.rating}</p>
                                                     <p><strong>Last Review:</strong> {selectedEmployee.lastReview}</p>
                                                 </div>
-                                            </DialogContent>
-                                        )}
+                                            )}
+                                        </DialogContent>
                                     </Dialog>
                                     <Button variant="ghost" size="sm" onClick={() => handleEditEmployee(employee)}>
                                         Edit

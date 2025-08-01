@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Home, FileText, Calculator, BarChart3, Database, Settings } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sidebar,
   SidebarContent,
@@ -14,17 +15,35 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: Home },
-  { name: "Staff Appraisals", href: "/staff-appraisals", icon: FileText },
-  { name: "KPI Calculator", href: "/calculations", icon: Calculator },
-  { name: "Performance Reports", href: "/reports", icon: BarChart3 },
-  { name: "Employee Data", href: "/data", icon: Database },
-  { name: "Settings", href: "/settings", icon: Settings },
-];
-
 export function NewSidebar() {
   const location = useLocation();
+  const { user } = useAuth();
+  
+  const getNavigation = () => {
+    const baseItems = [
+      { name: "Dashboard", href: "/app/dashboard", icon: Home },
+      { name: "Staff Appraisals", href: "/app/appraisals", icon: FileText },
+    ];
+
+    if (user?.role === "Admin") {
+      return [
+        ...baseItems,
+        { name: "KPI Calculator", href: "/app/calculations", icon: Calculator },
+        { name: "Performance Reports", href: "/app/reports", icon: BarChart3 },
+        { name: "Employee Data", href: "/app/data", icon: Database },
+        { name: "Settings", href: "/app/settings", icon: Settings },
+      ];
+    } else if (user?.role === "Manager") {
+      return [
+        ...baseItems,
+        { name: "Performance Reports", href: "/app/reports", icon: BarChart3 },
+        { name: "Employee Data", href: "/app/data", icon: Database },
+      ];
+    }
+    return baseItems;
+  };
+
+  const navigation = getNavigation();
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
 

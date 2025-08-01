@@ -1,140 +1,184 @@
 import { useState, useEffect } from "react";
-import { StatCard } from "@/components/dashboard/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  FileText, 
-  TrendingUp, 
-  Clock,
-  Plus,
-  BarChart3,
-} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { BarChart3, Users, TrendingUp, Award, FileText, Target } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
+import { api } from "@/lib/api";
+import { Layout } from "@/components/layout/Layout";
 
-interface KpiStats {
-    totalAppraisals: number;
-    averageOverallRating: number;
-    onTimeCompletionRate?: number;
-    employeeSatisfaction?: number;
-}
-interface RecentAppraisal {
-    id: number;
-    employeeName: string;
-    position: string;
-    overallRating: number;
-    status: string;
-}
-interface DepartmentPerformance {
-    department: string;
-    averageRating: number;
-    totalAppraisals: number;
+interface DashboardStats {
+  totalAppraisals: number;
+  averageOverallRating: number;
+  totalEmployees: number;
+  pendingReviews: number;
+  onTimeCompletionRate: number;
+  employeeSatisfaction: number;
 }
 
-// FIX: Added the 'export' keyword
+interface TeamPerformance {
+  department: string;
+  averageRating: number;
+  totalAppraisals: number;
+}
+
 export function AdminDashboard() {
-    const { toast } = useToast();
-    const navigate = useNavigate();
-    const [kpiStats, setKpiStats] = useState<KpiStats | null>(null);
-    const [recentAppraisals, setRecentAppraisals] = useState<RecentAppraisal[]>([]);
-    const [departmentPerformance, setDepartmentPerformance] = useState<DepartmentPerformance[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [teamPerformance, setTeamPerformance] = useState<TeamPerformance[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
     const fetchDashboardData = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const kpiResponse = await fetch('http://localhost:5094/api/dashboard/kpi-stats');
-            if (!kpiResponse.ok) throw new Error(`HTTP error! Status: ${kpiResponse.status} for KPI stats`);
-            const kpiData: KpiStats = await kpiResponse.json();
-            setKpiStats(kpiData);
-
-            const appraisalsResponse = await fetch('http://localhost:5094/api/staff-appraisals');
-            if (!appraisalsResponse.ok) throw new Error(`HTTP error! Status: ${appraisalsResponse.status} for recent appraisals`);
-            const allAppraisals: RecentAppraisal[] = await appraisalsResponse.json();
-            const sortedAppraisals = allAppraisals.sort((a, b) => b.id - a.id).slice(0, 3);
-            setRecentAppraisals(sortedAppraisals);
-
-            const deptPerfResponse = await fetch('http://localhost:5094/api/dashboard/team-performance-comparison');
-            if (!deptPerfResponse.ok) throw new Error(`HTTP error! Status: ${deptPerfResponse.status} for department performance`);
-            const deptPerfData: DepartmentPerformance[] = await deptPerfResponse.json();
-            setDepartmentPerformance(deptPerfData);
-
-        } catch (err: any) {
-            setError("Failed to load dashboard data. Please check backend connection.");
-            toast({
-                title: "Error Loading Dashboard",
-                description: err.message,
-                variant: "destructive",
-            });
-        } finally {
-            setLoading(false);
-        }
+      try {
+        const [statsData, teamData] = await Promise.all([
+          api.getDashboardStats(),
+          api.getTeamPerformanceComparison()
+        ]);
+        setStats(statsData);
+        setTeamPerformance(teamData);
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to load dashboard data",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
     };
 
-    useEffect(() => {
-        fetchDashboardData();
-    }, []);
+    fetchDashboardData();
+  }, [toast]);
 
-    if (loading) return <div>Loading dashboard...</div>;
-    if (error) return <div className="text-destructive">{error}</div>;
-
+  if (loading) {
     return (
-        <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatCard title="Staff Appraisals" value={kpiStats?.totalAppraisals?.toString() || "0"} icon={FileText} description="Completed this quarter" />
-                <StatCard title="Average Rating" value={kpiStats?.averageOverallRating ? `${kpiStats.averageOverallRating.toFixed(1)}/5` : "N/A"} icon={BarChart3} description="Overall performance rating" />
-                <StatCard title="Review Completion" value={kpiStats?.onTimeCompletionRate ? `${kpiStats.onTimeCompletionRate}%` : "N/A"} icon={Clock} description="On-time completion rate" />
-                <StatCard title="Employee Satisfaction" value={kpiStats?.employeeSatisfaction ? `${kpiStats.employeeSatisfaction}%` : "N/A"} icon={TrendingUp} description="Post-appraisal feedback" />
-            </div>
-            <Card>
-                <CardHeader><CardTitle>Quick Actions</CardTitle></CardHeader>
-                <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <Button className="h-24 flex flex-col space-y-2" variant="outline" onClick={() => navigate('/appraisals')}><Plus className="h-6 w-6" /><span>New Staff Appraisal</span></Button>
-                        <Button className="h-24 flex flex-col space-y-2" variant="outline" onClick={() => navigate('/reports')}><BarChart3 className="h-6 w-6" /><span>Performance Reports</span></Button>
-                        <Button className="h-24 flex flex-col space-y-2" variant="outline" onClick={() => navigate('/data')}><FileText className="h-6 w-6" /><span>Employee Records</span></Button>
-                    </div>
-                </CardContent>
-            </Card>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card>
-                    <CardHeader><CardTitle>Recent Staff Appraisals</CardTitle></CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            {recentAppraisals.map((appraisal) => (
-                                <div key={appraisal.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                                    <div>
-                                        <p className="font-medium">{appraisal.employeeName}</p>
-                                        <p className="text-sm text-muted-foreground">{appraisal.position}</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="font-bold">{appraisal.overallRating.toFixed(1)}/5</p>
-                                        <p className="text-sm text-muted-foreground">{appraisal.status}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader><CardTitle>Department Performance</CardTitle></CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            {departmentPerformance.map((dept) => (
-                                <div key={dept.department} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                                    <div>
-                                        <p className="font-medium">{dept.department}</p>
-                                        <p className="text-sm text-muted-foreground">{dept.totalAppraisals} appraisals</p>
-                                    </div>
-                                    <div className="text-success font-bold">{dept.averageRating.toFixed(1)}/5</div>
-                                </div>
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
-            </div>
+      <Layout title="Admin Dashboard">
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">Loading admin dashboard...</div>
         </div>
+      </Layout>
     );
+  }
+
+  return (
+    <Layout title="Admin Dashboard">
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+          <Badge variant="secondary">Administrator</Badge>
+        </div>
+
+        {/* Key Performance Indicators */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Employees</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats?.totalEmployees || 0}</div>
+              <p className="text-xs text-muted-foreground">Active workforce</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Appraisals</CardTitle>
+              <FileText className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats?.totalAppraisals || 0}</div>
+              <p className="text-xs text-muted-foreground">Completed reviews</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Average Rating</CardTitle>
+              <Award className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats?.averageOverallRating?.toFixed(1) || "0.0"}</div>
+              <p className="text-xs text-muted-foreground">Out of 5.0</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Pending Reviews</CardTitle>
+              <Target className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats?.pendingReviews || 0}</div>
+              <p className="text-xs text-muted-foreground">Awaiting completion</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">On-Time Rate</CardTitle>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats?.onTimeCompletionRate || 0}%</div>
+              <p className="text-xs text-muted-foreground">Completion rate</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Employee Satisfaction</CardTitle>
+              <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats?.employeeSatisfaction || 0}%</div>
+              <p className="text-xs text-muted-foreground">Satisfaction score</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Department Performance */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <BarChart3 className="h-5 w-5" />
+              <span>Department Performance</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {teamPerformance.map((dept) => (
+                <div key={dept.department} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div>
+                    <h3 className="font-medium">{dept.department}</h3>
+                    <p className="text-sm text-muted-foreground">{dept.totalAppraisals} appraisals</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-bold">{dept.averageRating.toFixed(1)}/5.0</div>
+                    <div className="text-sm text-muted-foreground">Average rating</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Actions */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Button className="w-full">Generate System Report</Button>
+              <Button variant="outline" className="w-full">Bulk Employee Import</Button>
+              <Button variant="outline" className="w-full">System Settings</Button>
+              <Button variant="outline" className="w-full">User Management</Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </Layout>
+  );
 }
