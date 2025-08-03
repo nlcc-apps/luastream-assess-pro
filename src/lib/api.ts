@@ -4,6 +4,7 @@ export interface StaffAppraisal {
   id: number;
   employeeId: string;
   employeeName: string;
+  employeeEmail?: string;
   position: string;
   department: string;
   reviewPeriod: string;
@@ -14,7 +15,9 @@ export interface StaffAppraisal {
   additionalComments: string;
   reviewDate: string;
   reviewerName: string;
+  reviewerId?: string;
   status: string;
+  submittedDate?: string;
 }
 
 export interface Employee {
@@ -26,6 +29,8 @@ export interface Employee {
   rating: string;
   lastReview: string;
   status: string;
+  managerId?: string; // Manager's employee ID
+  email?: string;
 }
 
 export interface PerformanceReport {
@@ -174,6 +179,34 @@ class ApiService {
   async exportEmployeesCSV(): Promise<Blob> {
     const response = await fetch(`${API_BASE_URL}/api/employees/export-csv`);
     return response.blob();
+  }
+
+  // Authentication
+  async login(email: string, password: string): Promise<{ sessionId: string; user: any }> {
+    return this.request('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
+  }
+
+  // Get employees by manager
+  async getEmployeesByManager(managerId: string): Promise<Employee[]> {
+    const allEmployees = await this.getEmployees();
+    return allEmployees.filter(emp => emp.managerId === managerId);
+  }
+
+  // Get appraisals by employee
+  async getAppraisalsByEmployee(employeeId: string): Promise<StaffAppraisal[]> {
+    const allAppraisals = await this.getStaffAppraisals();
+    return allAppraisals.filter(appraisal => appraisal.employeeId === employeeId);
+  }
+
+  // Get appraisals for manager's team
+  async getAppraisalsForManagerTeam(managerId: string): Promise<StaffAppraisal[]> {
+    const teamMembers = await this.getEmployeesByManager(managerId);
+    const allAppraisals = await this.getStaffAppraisals();
+    const teamIds = teamMembers.map(member => member.employeeId);
+    return allAppraisals.filter(appraisal => teamIds.includes(appraisal.employeeId));
   }
 }
 

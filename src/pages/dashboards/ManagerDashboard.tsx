@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
 import { Layout } from "@/components/layout/Layout";
 import { useAuth } from "@/contexts/AuthContext";
+import { EvaluationModal } from "@/components/modals/EvaluationModal";
 
 interface ManagerStats {
   directReports: number;
@@ -35,16 +36,14 @@ export function ManagerDashboard() {
   });
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
+  const [isEvaluationModalOpen, setIsEvaluationModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchManagerData = async () => {
       try {
-        // Fetch employees and filter by manager (this would need to be implemented in the API)
-        const employees = await api.getEmployees();
-        
-        // For demo purposes, we'll show all employees as direct reports
-        // In a real application, you'd filter by managerId or similar
-        const directReports = employees.filter(() => true); // This should filter by current user as manager
+        // Fetch employees managed by current user
+        const directReports = user?.email ? await api.getEmployeesByManager(user.email) : [];
         
         setTeamMembers(directReports);
         setStats({
@@ -67,7 +66,7 @@ export function ManagerDashboard() {
     };
 
     fetchManagerData();
-  }, [toast]);
+  }, [toast, user]);
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -76,6 +75,39 @@ export function ManagerDashboard() {
       case "overdue": return "destructive";
       default: return "secondary";
     }
+  };
+
+  const handleEvaluateEmployee = (employee: any) => {
+    setSelectedEmployee(employee);
+    setIsEvaluationModalOpen(true);
+  };
+
+  const refreshData = () => {
+    setLoading(true);
+    const fetchManagerData = async () => {
+      try {
+        const directReports = user?.email ? await api.getEmployeesByManager(user.email) : [];
+        
+        setTeamMembers(directReports);
+        setStats({
+          directReports: directReports.length,
+          pendingAppraisals: directReports.filter(emp => emp.status === 'pending').length,
+          completedAppraisals: directReports.filter(emp => emp.status === 'active').length,
+          teamAverageRating: directReports.length > 0 
+            ? directReports.reduce((sum, emp) => sum + parseFloat(emp.rating || '0'), 0) / directReports.length
+            : 0
+        });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to refresh manager dashboard data",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchManagerData();
   };
 
   if (loading) {
@@ -174,7 +206,13 @@ export function ManagerDashboard() {
                       <p className="text-sm text-muted-foreground">Rating</p>
                     </div>
                     <div className="flex space-x-2">
-                      <Button variant="ghost" size="sm">Evaluate</Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleEvaluateEmployee(member)}
+                      >
+                        Evaluate
+                      </Button>
                       <Button variant="ghost" size="sm">View Profile</Button>
                     </div>
                   </div>
@@ -213,6 +251,13 @@ export function ManagerDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      <EvaluationModal
+        employee={selectedEmployee}
+        open={isEvaluationModalOpen}
+        onOpenChange={setIsEvaluationModalOpen}
+        onEvaluationSubmitted={refreshData}
+      />
     </Layout>
   );
 }

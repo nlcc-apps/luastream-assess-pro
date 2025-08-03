@@ -43,10 +43,11 @@ export function EmployeeDashboard() {
         // Fetch appraisals for the current employee
         const appraisals = await api.getStaffAppraisals();
         
-        // Filter appraisals for current user (in a real app, this would be done server-side)
-        const myAppraisalsList = appraisals.filter((appraisal: any) => 
-          appraisal.employeeEmail === user?.email
-        ).map((appraisal: any) => ({
+        // Filter appraisals for current user
+        const myAppraisalsList = user?.email ? 
+          await api.getAppraisalsByEmployee(user.email) : [];
+        
+        const formattedAppraisals = myAppraisalsList.map((appraisal: any) => ({
           id: appraisal.id,
           title: appraisal.employeeName || 'Staff Appraisal',
           status: appraisal.status || 'Pending',
@@ -54,13 +55,13 @@ export function EmployeeDashboard() {
           overallRating: appraisal.overallRating
         }));
         
-        setMyAppraisals(myAppraisalsList);
+        setMyAppraisals(formattedAppraisals);
         setStats({
-          myAppraisals: myAppraisalsList.length,
-          pendingActions: myAppraisalsList.filter((a: any) => a.status === 'Pending').length,
-          completedGoals: myAppraisalsList.filter((a: any) => a.status === 'Completed').length,
-          averageRating: myAppraisalsList.length > 0 
-            ? myAppraisalsList.reduce((sum: number, a: any) => sum + (a.overallRating || 0), 0) / myAppraisalsList.length
+          myAppraisals: formattedAppraisals.length,
+          pendingActions: formattedAppraisals.filter((a: any) => a.status === 'Pending').length,
+          completedGoals: formattedAppraisals.filter((a: any) => a.status === 'Completed').length,
+          averageRating: formattedAppraisals.length > 0 
+            ? formattedAppraisals.reduce((sum: number, a: any) => sum + (a.overallRating || 0), 0) / formattedAppraisals.length
             : 0
         });
       } catch (error) {
