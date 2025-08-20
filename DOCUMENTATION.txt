@@ -1,0 +1,500 @@
+# LUASTREAM ASSESS PRO - CODEBASE DOCUMENTATION
+
+## PROJECT OVERVIEW
+A React-based HR Performance Management System built with TypeScript, Tailwind CSS, and shadcn/ui components.
+The application provides role-based dashboards for Admin, Manager, and Employee users.
+
+## TECHNOLOGY STACK
+- React 18.3.1 with TypeScript
+- Vite for build tooling
+- React Router DOM for routing
+- Tailwind CSS for styling
+- shadcn/ui component library
+- Radix UI primitives
+- TanStack Query for state management
+- React Hook Form for form handling
+- Zod for validation
+
+===============================================================================
+
+## FILE STRUCTURE
+
+### Root Configuration
+- `index.html` - Main HTML template
+- `vite.config.ts` - Vite configuration
+- `tailwind.config.ts` - Tailwind CSS configuration
+- `tsconfig.json` - TypeScript configuration
+- `eslint.config.js` - ESLint configuration
+
+### Source Directory (`src/`)
+- `main.tsx` - Application entry point
+- `App.tsx` - Main application component with routing
+- `index.css` - Global styles and CSS variables
+- `vite-env.d.ts` - Vite environment types
+
+===============================================================================
+
+## COMPONENTS DIRECTORY (`src/components/`)
+
+### Authentication Components (`src/components/auth/`)
+
+#### ProtectedRoute.tsx
+- **Function**: `ProtectedRoute({ children }: ProtectedRouteProps)`
+- **Purpose**: Route guard that redirects unauthenticated users to login
+- **Location**: Used in App.tsx for protecting /app routes
+- **Interface**: `ProtectedRouteProps { children: React.ReactNode }`
+
+### Dashboard Components (`src/components/dashboard/`)
+
+#### StatCard.tsx
+- **Function**: `StatCard({ title, value, change, changeType, icon, description }: StatCardProps)`
+- **Purpose**: Displays key metrics with icons and change indicators
+- **Used in**: All dashboard pages (Admin, Manager, Employee)
+- **Interface**: `StatCardProps { title: string; value: string; change?: string; changeType?: "positive" | "negative" | "neutral"; icon: LucideIcon; description?: string; }`
+
+### Form Components (`src/components/forms/`)
+
+#### StaffAppraisalForm.tsx
+- **Function**: `StaffAppraisalForm({ onClose, onSuccess }: StaffAppraisalFormProps)`
+- **Purpose**: Form for creating new staff appraisals
+- **Location**: Used in StaffAppraisalsPage
+- **Interfaces**: 
+  - `StaffAppraisalData { employeeId: string; reviewPeriod: string; overallRating: string; goals: string; achievements: string; areasForImprovement: string; comments: string; }`
+  - `StaffAppraisalFormProps { onClose: () => void; onSuccess: () => void; }`
+
+### Layout Components (`src/components/layout/`)
+
+#### Header.tsx
+- **Function**: `Header({ title, subtitle }: HeaderProps)`
+- **Purpose**: Application header with title, user actions, and logout
+- **Features**: Search, notifications, user avatar, logout button
+- **Interface**: `HeaderProps { title: string; subtitle?: string; }`
+
+#### Layout.tsx
+- **Function**: `Layout({ children, title, subtitle }: LayoutProps)`
+- **Purpose**: Main layout wrapper with sidebar and header
+- **Interface**: `LayoutProps { children: React.ReactNode; title: string; subtitle?: string; }`
+
+#### Sidebar.tsx
+- **Function**: `Sidebar({ currentPage, onPageChange }: SidebarProps)`
+- **Purpose**: Navigation sidebar with role-based menu items
+- **Features**: Collapsible, role-based navigation, active page highlighting
+- **Interface**: `SidebarProps { currentPage: string; onPageChange: (page: string) => void; }`
+
+#### NewSidebar.tsx
+- **Function**: `NewSidebar()`
+- **Purpose**: Updated sidebar component using shadcn/ui sidebar primitives
+- **Features**: Role-based navigation, collapsible state management
+
+### Modal Components (`src/components/modals/`)
+
+#### EmployeeModal.tsx
+- **Function**: `EmployeeModal({ employee, open, onOpenChange, onEmployeeUpdated }: EmployeeModalProps)`
+- **Purpose**: Modal for viewing and editing employee details
+- **Features**: Form validation, API integration, loading states
+- **Interface**: `EmployeeModalProps { employee: Employee | null; open: boolean; onOpenChange: (open: boolean) => void; onEmployeeUpdated: () => void; }`
+
+#### EvaluationModal.tsx
+- **Function**: `EvaluationModal({ employee, open, onOpenChange, onEvaluationSubmitted }: EvaluationModalProps)`
+- **Purpose**: Modal for submitting employee performance evaluations
+- **Features**: Form handling, API submission, success feedback
+- **Interface**: `EvaluationModalProps { employee: Employee | null; open: boolean; onOpenChange: (open: boolean) => void; onEvaluationSubmitted: () => void; }`
+
+#### PerformanceReportModal.tsx
+- **Function**: `PerformanceReportModal({ report, open, onOpenChange }: PerformanceReportModalProps)`
+- **Purpose**: Modal for viewing performance report details and downloading
+- **Features**: Report viewing, download functionality
+- **Interface**: `PerformanceReportModalProps { report: PerformanceReport | null; open: boolean; onOpenChange: (open: boolean) => void; }`
+
+### UI Components (`src/components/ui/`)
+All shadcn/ui components with standard interfaces:
+- `accordion.tsx` - Collapsible content sections
+- `alert-dialog.tsx` - Modal alerts and confirmations
+- `alert.tsx` - Inline alert messages
+- `avatar.tsx` - User profile images
+- `badge.tsx` - Status indicators
+- `button.tsx` - Interactive buttons with variants
+- `calendar.tsx` - Date picker component
+- `card.tsx` - Content containers
+- `checkbox.tsx` - Form checkboxes
+- `collapsible.tsx` - Expandable content
+- `dialog.tsx` - Modal dialogs
+- `form.tsx` - Form wrapper components
+- `input.tsx` - Text input fields
+- `label.tsx` - Form labels
+- `select.tsx` - Dropdown selections
+- `sidebar.tsx` - Sidebar primitives
+- `table.tsx` - Data tables
+- `tabs.tsx` - Tabbed content
+- `textarea.tsx` - Multi-line text input
+- `toast.tsx` & `toaster.tsx` - Notification system
+- `tooltip.tsx` - Hover information
+
+===============================================================================
+
+## CONTEXTS (`src/contexts/`)
+
+#### AuthContext.tsx
+- **Functions**:
+  - `AuthProvider({ children }: { children: ReactNode })` - Context provider
+  - `useAuth()` - Hook for accessing auth state
+- **Purpose**: Manages user authentication, login/logout, session storage
+- **State**: User object, authentication status
+- **Interfaces**:
+  - `User { id: string; email: string; role: "Admin" | "Manager" | "Employee"; }`
+  - `AuthContextType { user: User | null; login: (sessionId: string, userData: User) => void; logout: () => void; isAuthenticated: boolean; }`
+
+===============================================================================
+
+## HOOKS (`src/hooks/`)
+
+#### use-mobile.tsx
+- **Function**: `useIsMobile()`
+- **Purpose**: Detects mobile screen sizes using media queries
+- **Returns**: Boolean indicating mobile state
+
+#### use-toast.ts
+- **Function**: `reducer(state: State, action: Action): State`
+- **Purpose**: State management for toast notifications
+- **Interface**: `State { toasts: ToasterToast[] }`
+
+===============================================================================
+
+## LIBRARY (`src/lib/`)
+
+#### api.ts
+**Core API service with all backend communication**
+
+**Interfaces**:
+- `StaffAppraisal { id: number; employeeId: string; employeeName: string; reviewPeriod: string; overallRating: string; goals: string; achievements: string; areasForImprovement: string; comments: string; reviewDate: string; reviewerId: string; reviewerName: string; status: string; }`
+
+- `Employee { id: number; name: string; position: string; department: string; email: string; hireDate: string; status: string; managerId?: string; managerName?: string; rating: number; }`
+
+- `PerformanceReport { id: number; title: string; description: string; generatedDate: string; employeeId: string; employeeName: string; reportType: string; status: string; }`
+
+- `PerformanceCalculation { id: number; employeeId: string; employeeName: string; kpiName: string; targetValue: number; actualValue: number; percentage: number; calculationDate: string; }`
+
+- `DashboardStats { totalEmployees: number; averageRating: number; completedAppraisals: number; pendingAppraisals: number; }`
+
+- `StaffProfile { employeeId: string; name: string; position: string; department: string; email: string; managerId?: string; rating: number; }`
+
+**API Methods**:
+- `getStaffAppraisals(): Promise<StaffAppraisal[]>`
+- `createStaffAppraisal(appraisal: Omit<StaffAppraisal, 'id'>): Promise<StaffAppraisal>`
+- `getEmployees(): Promise<Employee[]>`
+- `getEmployee(id: number): Promise<Employee>`
+- `createEmployee(employee: Omit<Employee, 'id'>): Promise<Employee>`
+- `updateEmployee(id: number, employee: Employee): Promise<void>`
+- `getPerformanceReports(): Promise<PerformanceReport[]>`
+- `createPerformanceReport(report: Omit<PerformanceReport, 'id'>): Promise<PerformanceReport>`
+- `downloadReport(id: number): Promise<Blob>`
+- `getPerformanceCalculations(): Promise<PerformanceCalculation[]>`
+- `createPerformanceCalculation(calculation: Omit<PerformanceCalculation, 'id'>): Promise<PerformanceCalculation>`
+- `getDashboardStats(): Promise<DashboardStats>`
+- `getTeamPerformanceComparison(): Promise<any[]>`
+- `getStaffProfile(employeeId: string): Promise<StaffProfile>`
+- `updateStaffProfile(profile: StaffProfile): Promise<void>`
+- `exportEmployeesCSV(): Promise<Blob>`
+- `login(email: string, password: string): Promise<{ sessionId: string; user: any }>`
+- `getEmployeesByManager(managerId: string): Promise<Employee[]>`
+- `getAppraisalsByEmployee(employeeId: string): Promise<StaffAppraisal[]>`
+- `getAppraisalsForManagerTeam(managerId: string): Promise<StaffAppraisal[]>`
+
+**Export**: `api` - Instance of ApiService class
+
+#### utils.ts
+- **Function**: `cn(...inputs: ClassValue[])`
+- **Purpose**: Utility for combining Tailwind classes with clsx and tailwind-merge
+- **Usage**: Used throughout components for conditional styling
+
+===============================================================================
+
+## PAGES (`src/pages/`)
+
+### Main Pages
+
+#### App.tsx
+- **Component**: Main application router
+- **Function**: `DashboardRouter()` - Routes users to appropriate dashboard based on role
+- **Routes**: 
+  - `/landing` - LandingPage
+  - `/login` - LoginPage
+  - `/app/*` - Protected routes with Index layout
+  - Nested routes: dashboard, appraisals, calculations, reports, data, settings
+
+#### Index.tsx
+- **Function**: `Index()` - Main layout component for authenticated routes
+- **Features**: Sidebar navigation, header, outlet for nested routes
+- **Functions**:
+  - `handlePageChange(page: string)` - Navigation handler
+  - `getPageTitle()` - Dynamic page title based on route
+
+#### LandingPage.tsx
+- **Function**: `LandingPage()`
+- **Purpose**: Public landing page with app introduction
+
+#### LoginPage.tsx
+- **Function**: `LoginPage()`
+- **Purpose**: User authentication page
+- **Features**: Login form, role-based redirection
+
+#### NotFound.tsx
+- **Purpose**: 404 error page for invalid routes
+
+### Feature Pages
+
+#### CalculationsPage.tsx
+- **Function**: `CalculationsPage()`
+- **Purpose**: KPI calculator and performance metrics
+- **Features**: Calculation forms, results display
+
+#### DataPage.tsx
+- **Function**: `DataPage()`
+- **Purpose**: Employee data management
+- **Features**: Employee list, search, edit, role-based filtering
+- **Role Access**: 
+  - Admin: All employees
+  - Manager: Direct reports only
+  - Employee: Own data only
+
+#### ReportsPage.tsx
+- **Function**: `ReportsPage()`
+- **Purpose**: Performance reports management
+- **Features**: Report generation, viewing, downloading
+- **Role Access**: Role-based report filtering
+
+#### SettingsPage.tsx
+- **Function**: `SettingsPage()`
+- **Purpose**: Application settings and user preferences
+
+#### StaffAppraisalsPage.tsx
+- **Function**: `StaffAppraisalsPage()`
+- **Purpose**: Staff appraisal management
+- **Features**: Create, view, manage appraisals
+- **Role Access**: Role-based appraisal access
+
+### Dashboard Pages (`src/pages/dashboards/`)
+
+#### AdminDashboard.tsx
+- **Function**: `AdminDashboard()`
+- **Purpose**: Administrator dashboard with system-wide metrics
+- **Features**: System stats, team performance comparison, employee management
+- **Interfaces**:
+  - `DashboardStats { totalEmployees: number; averageRating: number; completedAppraisals: number; pendingAppraisals: number; }`
+  - `TeamPerformance { department: string; averageRating: number; completedAppraisals: number; }`
+
+#### EmployeeDashboard.tsx
+- **Function**: `EmployeeDashboard()`
+- **Purpose**: Employee personal dashboard
+- **Features**: Personal stats, appraisal history, profile management
+- **Interfaces**:
+  - `EmployeeStats { currentRating: number; completedAppraisals: number; pendingActions: number; }`
+  - `AppraisalStatus { id: number; reviewPeriod: string; status: string; overallRating: string; }`
+
+#### ManagerDashboard.tsx
+- **Function**: `ManagerDashboard()`
+- **Purpose**: Manager dashboard for team oversight
+- **Features**: Team stats, direct reports, evaluation capabilities
+- **Interfaces**:
+  - `ManagerStats { teamSize: number; averageTeamRating: number; pendingEvaluations: number; }`
+  - `TeamMember { id: number; name: string; position: string; rating: number; lastAppraisal: string; }`
+
+===============================================================================
+
+## ROUTING STRUCTURE
+
+### Public Routes
+- `/` → Redirect to `/landing`
+- `/landing` → LandingPage
+- `/login` → LoginPage
+
+### Protected Routes (under `/app`)
+- `/app` → Index layout component
+  - `/app/dashboard` → Role-based dashboard (Admin/Manager/Employee)
+  - `/app/appraisals` → StaffAppraisalsPage
+  - `/app/calculations` → CalculationsPage
+  - `/app/reports` → ReportsPage
+  - `/app/data` → DataPage
+  - `/app/settings` → SettingsPage
+
+### Error Routes
+- `*` → NotFound (404 page)
+
+===============================================================================
+
+## AUTHENTICATION FLOW
+
+1. **Login Process**:
+   - User submits credentials via LoginPage
+   - API call to `/auth/login` endpoint
+   - Success: Store sessionId and user data in localStorage
+   - Navigate to appropriate dashboard based on user role
+
+2. **Route Protection**:
+   - ProtectedRoute component checks authentication status
+   - Unauthenticated users redirected to `/login`
+   - Authenticated users can access `/app/*` routes
+
+3. **Role-Based Access**:
+   - Admin: Full system access
+   - Manager: Team management and direct reports
+   - Employee: Personal data and appraisals only
+
+4. **Logout Process**:
+   - Clear localStorage (sessionId, user data)
+   - Navigate to `/login`
+
+===============================================================================
+
+## API ENDPOINTS (Backend Expected)
+
+Base URL: `http://localhost:5000`
+
+### Authentication
+- `POST /auth/login` - User authentication
+
+### Staff Appraisals
+- `GET /staff-appraisals` - Get all appraisals
+- `GET /staff-appraisals/employee/:employeeId` - Get employee appraisals
+- `GET /staff-appraisals/manager-team/:managerId` - Get manager team appraisals
+- `POST /staff-appraisals` - Create new appraisal
+
+### Employees
+- `GET /employees` - Get all employees
+- `GET /employees/:id` - Get specific employee
+- `GET /employees/manager/:managerId` - Get manager's direct reports
+- `POST /employees` - Create new employee
+- `PUT /employees/:id` - Update employee
+- `GET /employees/export-csv` - Export employees as CSV
+
+### Performance Reports
+- `GET /performance-reports` - Get all reports
+- `POST /performance-reports` - Create new report
+- `GET /performance-reports/:id/download` - Download report
+
+### Performance Calculations
+- `GET /performance-calculations` - Get all calculations
+- `POST /performance-calculations` - Create new calculation
+
+### Dashboard & Analytics
+- `GET /dashboard/stats` - Get dashboard statistics
+- `GET /dashboard/team-performance` - Get team performance comparison
+
+### Staff Profiles
+- `GET /staff/:employeeId` - Get staff profile
+- `PUT /staff/:employeeId` - Update staff profile
+
+===============================================================================
+
+## KEY FEATURES BY ROLE
+
+### Admin Features
+- View all employees across organization
+- Access all appraisals and reports
+- System-wide dashboard with comprehensive metrics
+- Employee management (create, edit, delete)
+- Organization-wide analytics
+
+### Manager Features
+- View and manage direct reports only
+- Evaluate team members
+- Team-specific dashboard and metrics
+- Access team appraisals and reports
+- Team performance tracking
+
+### Employee Features
+- View personal profile and data
+- Access own appraisal history
+- Personal dashboard with individual metrics
+- Limited to own data only
+- Profile management
+
+===============================================================================
+
+## STYLING SYSTEM
+
+### Design Tokens (index.css)
+- CSS custom properties for colors, spacing, typography
+- Dark/light mode support
+- Semantic color naming (primary, secondary, muted, etc.)
+
+### Tailwind Configuration
+- Extended color palette using CSS variables
+- Custom component variants
+- Responsive design utilities
+- Animation and transition utilities
+
+### Component Styling Approach
+- Semantic token usage (avoid direct color classes)
+- Consistent spacing and typography scale
+- Hover and focus states
+- Responsive design patterns
+
+===============================================================================
+
+## ERROR HANDLING
+
+### API Error Handling
+- Try-catch blocks in all API calls
+- Toast notifications for user feedback
+- Loading states during async operations
+- Fallback UI for error states
+
+### Form Validation
+- Client-side validation using React Hook Form
+- Schema validation with Zod
+- Real-time validation feedback
+- Error message display
+
+### Route Error Handling
+- Protected route authentication checks
+- 404 page for invalid routes
+- Role-based access control
+- Redirect handling for unauthorized access
+
+===============================================================================
+
+## STATE MANAGEMENT
+
+### Authentication State
+- Context-based user state management
+- localStorage persistence
+- Session management
+- Role-based state access
+
+### Component State
+- Local state with useState for component data
+- Form state with React Hook Form
+- Modal state management
+- Loading and error states
+
+### API State
+- TanStack Query for server state (configured but not extensively used)
+- Direct API calls with promise handling
+- Optimistic updates where appropriate
+
+===============================================================================
+
+## BUILD AND DEPLOYMENT
+
+### Development
+- Vite development server
+- Hot module replacement
+- TypeScript compilation
+- ESLint code quality checks
+
+### Production Build
+- Vite production build optimization
+- Asset bundling and code splitting
+- CSS optimization with Tailwind
+- TypeScript compilation to JavaScript
+
+### Dependencies Management
+- Package management via npm/bun
+- Locked dependency versions
+- Regular security updates
+- Peer dependency management
+
+===============================================================================
+
+This documentation covers the complete codebase structure, component hierarchy, API integration, and architectural decisions for the LuaStream Assess Pro application.
