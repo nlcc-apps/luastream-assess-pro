@@ -33,24 +33,14 @@ const App = () => (
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<Navigate to="/landing" replace />} />
 
-            {/* Protected Application Layout */}
-            <Route
-              path="/app"
-              element={
-                <ProtectedRoute>
-                  <Index />
-                </ProtectedRoute>
-              }
-            >
-              {/* Nested routes will render inside the Index component's <Outlet /> */}
-              <Route index element={<DashboardRouter />} /> {/* Default route for /app */}
-              <Route path="dashboard" element={<DashboardRouter />} />
-              <Route path="appraisals" element={<StaffAppraisalsPage />} />
-              <Route path="calculations" element={<CalculationsPage />} />
-              <Route path="reports" element={<ReportsPage />} />
-              <Route path="data" element={<DataPage />} />
-              <Route path="settings" element={<SettingsPage />} />
-            </Route>
+            {/* Protected Application Routes */}
+            <Route path="/app/dashboard" element={<ProtectedRoute><DashboardRouter /></ProtectedRoute>} />
+            <Route path="/app" element={<ProtectedRoute><DashboardRouter /></ProtectedRoute>} />
+            <Route path="/app/appraisals" element={<ProtectedRoute><StaffAppraisalsPage /></ProtectedRoute>} />
+            <Route path="/app/calculations" element={<ProtectedRoute><CalculationsPage /></ProtectedRoute>} />
+            <Route path="/app/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
+            <Route path="/app/data" element={<ProtectedRoute><DataPage /></ProtectedRoute>} />
+            <Route path="/app/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>

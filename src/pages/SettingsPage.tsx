@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Settings, User, Bell, Shield, Database } from "lucide-react";
+import { Layout } from "@/components/layout/Layout";
 
 export function SettingsPage() {
   return (
-    <div className="space-y-6 max-w-4xl">
+    <Layout title="Settings" subtitle="Manage your account and application preferences">
+      <div className="space-y-6 max-w-4xl">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
@@ -127,6 +129,7 @@ export function SettingsPage() {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </Layout>
   );
 }

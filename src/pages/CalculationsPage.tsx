@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calculator, TrendingUp, Users } from "lucide-react";
+import { Layout } from "@/components/layout/Layout";
 
 export function CalculationsPage() {
   const [ratings, setRatings] = useState({
@@ -25,7 +26,8 @@ export function CalculationsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <Layout title="KPI Calculator" subtitle="Calculate and analyze performance ratings">
+      <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -136,6 +138,7 @@ export function CalculationsPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+      </div>
+    </Layout>
   );
 }
