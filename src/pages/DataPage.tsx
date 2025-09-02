@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Eye, Download, Users, UserPlus } from "lucide-react";
+import { Eye, Download, Users, UserPlus, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { api, Employee } from "@/lib/api";
 import { Layout } from "@/components/layout/Layout";
 import { EmployeeModal } from "@/components/modals/EmployeeModal";
+import { BulkImportModal } from "@/components/modals/BulkImportModal";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function DataPage() {
@@ -16,25 +17,32 @@ export function DataPage() {
   const [loading, setLoading] = useState(true);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBulkImportOpen, setIsBulkImportOpen] = useState(false);
 
   useEffect(() => {
     const fetchEmployees = async () => {
+      console.log("DataPage: Starting employee fetch for user:", user?.email, user?.role);
       try {
         let data: Employee[];
         
         // Role-based data filtering
         if (user?.role === "Admin") {
+          console.log("DataPage: Fetching all employees for admin");
           data = await api.getEmployees();
         } else if (user?.role === "Manager") {
+          console.log("DataPage: Fetching employees by manager:", user.email);
           data = await api.getEmployeesByManager(user.email);
         } else {
+          console.log("DataPage: Fetching employee's own data");
           // Employee can only see their own data
           const allEmployees = await api.getEmployees();
           data = allEmployees.filter(emp => emp.email === user?.email);
         }
         
+        console.log("DataPage: Employees loaded:", data.length);
         setEmployees(data);
       } catch (error) {
+        console.error("DataPage: Failed to load employees:", error);
         toast({
           title: "Error",
           description: "Failed to load employees",
@@ -49,6 +57,7 @@ export function DataPage() {
   }, [toast, user]);
 
   const handleExportCSV = async () => {
+    console.log("DataPage: Starting CSV export");
     try {
       const blob = await api.exportEmployeesCSV();
       const url = window.URL.createObjectURL(blob);
@@ -60,11 +69,13 @@ export function DataPage() {
       a.click();
       window.URL.revokeObjectURL(url);
       
+      console.log("DataPage: CSV export completed successfully");
       toast({
         title: "Success",
         description: "Employee data exported successfully",
       });
     } catch (error) {
+      console.error("DataPage: CSV export failed:", error);
       toast({
         title: "Error",
         description: "Failed to export employee data",
@@ -73,12 +84,38 @@ export function DataPage() {
     }
   };
 
+  const handleBulkImport = () => {
+    console.log("DataPage: Opening bulk import modal");
+    setIsBulkImportOpen(true);
+  };
+
+  const handleAddEmployee = () => {
+    console.log("DataPage: Add employee functionality triggered");
+    // Create a new empty employee for the modal
+    const newEmployee: Employee = {
+      id: 0,
+      employeeId: `EMP${Date.now()}`,
+      name: '',
+      position: '',
+      department: '',
+      rating: '0',
+      lastReview: new Date().toISOString(),
+      status: 'active',
+      email: '',
+      managerId: ''
+    };
+    setSelectedEmployee(newEmployee);
+    setIsModalOpen(true);
+  };
+
   const handleViewEmployee = (employee: Employee) => {
+    console.log("DataPage: Opening employee modal for:", employee.employeeId, employee.name);
     setSelectedEmployee(employee);
     setIsModalOpen(true);
   };
 
   const refreshEmployees = () => {
+    console.log("DataPage: Refreshing employee data");
     setLoading(true);
     const fetchEmployees = async () => {
       try {
@@ -93,8 +130,10 @@ export function DataPage() {
           data = allEmployees.filter(emp => emp.email === user?.email);
         }
         
+        console.log("DataPage: Employee data refreshed, count:", data.length);
         setEmployees(data);
       } catch (error) {
+        console.error("DataPage: Failed to refresh employees:", error);
         toast({
           title: "Error",
           description: "Failed to refresh employees",
@@ -143,7 +182,11 @@ export function DataPage() {
                       <Download className="h-4 w-4 mr-2" />
                       Export CSV
                     </Button>
-                    <Button>
+                    <Button variant="outline" onClick={handleBulkImport}>
+                      <Upload className="h-4 w-4 mr-2" />
+                      Bulk Import
+                    </Button>
+                    <Button onClick={handleAddEmployee}>
                       <UserPlus className="h-4 w-4 mr-2" />
                       Add Employee
                     </Button>
@@ -200,6 +243,12 @@ export function DataPage() {
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
         onEmployeeUpdated={refreshEmployees}
+      />
+
+      <BulkImportModal
+        open={isBulkImportOpen}
+        onOpenChange={setIsBulkImportOpen}
+        onImportComplete={refreshEmployees}
       />
     </Layout>
   );

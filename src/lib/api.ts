@@ -181,6 +181,14 @@ class ApiService {
     return response.blob();
   }
 
+  // Bulk Import
+  async bulkImportEmployees(employees: Omit<Employee, 'id'>[]): Promise<{ success: number; failed: number }> {
+    return this.request('/api/employees/bulk-import', {
+      method: 'POST',
+      body: JSON.stringify(employees),
+    });
+  }
+
   // Authentication
   async login(email: string, password: string): Promise<{ sessionId: string; user: any }> {
     return this.request('/api/auth/login', {

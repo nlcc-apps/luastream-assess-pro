@@ -18,6 +18,7 @@ interface ManagerStats {
 
 interface TeamMember {
   id: number;
+  employeeId: string; // Add this field
   name: string;
   position: string;
   lastReview: string;
@@ -41,10 +42,12 @@ export function ManagerDashboard() {
 
   useEffect(() => {
     const fetchManagerData = async () => {
+      console.log("ManagerDashboard: Starting manager data fetch for user:", user?.email);
       try {
         // Fetch employees managed by current user
         const directReports = user?.email ? await api.getEmployeesByManager(user.email) : [];
         
+        console.log("ManagerDashboard: Direct reports loaded:", directReports.length);
         setTeamMembers(directReports);
         setStats({
           directReports: directReports.length,
@@ -54,7 +57,9 @@ export function ManagerDashboard() {
             ? directReports.reduce((sum, emp) => sum + parseFloat(emp.rating || '0'), 0) / directReports.length
             : 0
         });
+        console.log("ManagerDashboard: Stats calculated for manager");
       } catch (error) {
+        console.error("ManagerDashboard: Failed to load manager dashboard data:", error);
         toast({
           title: "Error",
           description: "Failed to load manager dashboard data",
@@ -78,16 +83,89 @@ export function ManagerDashboard() {
   };
 
   const handleEvaluateEmployee = (employee: any) => {
+    console.log("ManagerDashboard: Evaluate employee clicked for:", employee.employeeId, employee.name);
     setSelectedEmployee(employee);
     setIsEvaluationModalOpen(true);
   };
 
+  const handleCreateTeamReport = async () => {
+    console.log("ManagerDashboard: Create team report clicked");
+    try {
+      const teamAppraisals = user?.email ? await api.getAppraisalsForManagerTeam(user.email) : [];
+      console.log("ManagerDashboard: Team appraisals fetched:", teamAppraisals.length);
+      
+      const reportData = {
+        reportId: `TEAM_REPORT_${Date.now()}`,
+        employeeName: `Team Report - ${user?.email || 'Manager'}`,
+        reportContent: `Team Performance Report\nGenerated: ${new Date().toISOString()}\nTeam Size: ${teamMembers.length}\nTotal Appraisals: ${teamAppraisals.length}`,
+        status: 'generated',
+        createdDate: new Date().toISOString()
+      };
+      
+      await api.createPerformanceReport(reportData);
+      toast({
+        title: "Team Report Created",
+        description: `Generated team performance report with ${teamAppraisals.length} appraisals`,
+      });
+    } catch (error) {
+      console.error("ManagerDashboard: Failed to create team report:", error);
+      toast({
+        title: "Error",
+        description: "Failed to create team report",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleScheduleReviews = () => {
+    console.log("ManagerDashboard: Schedule reviews clicked");
+    toast({
+      title: "Schedule Reviews",
+      description: "Opening review scheduling interface for your team",
+    });
+    // Could open a scheduling modal or navigate to scheduling page
+  };
+
+  const handleViewTeamAnalytics = () => {
+    console.log("ManagerDashboard: View team analytics clicked");
+    toast({
+      title: "Team Analytics",
+      description: "Viewing comprehensive team performance analytics",
+    });
+    // Could navigate to a team analytics page
+    // navigate('/app/team-analytics');
+  };
+
+  const handleViewProfile = (employeeId: string) => {
+    console.log("ManagerDashboard: View profile clicked for employee:", employeeId);
+    toast({
+      title: "Employee Profile",
+      description: `Viewing profile for employee ${employeeId}`,
+    });
+    // Could open employee profile modal or navigate to profile page
+  };
+
+  const handleEvaluateTeamMember = () => {
+    console.log("ManagerDashboard: Evaluate Team Member button clicked");
+    if (teamMembers.length > 0) {
+      handleEvaluateEmployee(teamMembers[0]); // Default to first team member
+    } else {
+      toast({
+        title: "No Team Members",
+        description: "You don't have any team members to evaluate",
+        variant: "destructive",
+      });
+    }
+  };
+
   const refreshData = () => {
+    console.log("ManagerDashboard: Refreshing manager data");
     setLoading(true);
     const fetchManagerData = async () => {
       try {
         const directReports = user?.email ? await api.getEmployeesByManager(user.email) : [];
         
+        console.log("ManagerDashboard: Data refreshed, direct reports:", directReports.length);
         setTeamMembers(directReports);
         setStats({
           directReports: directReports.length,
@@ -98,6 +176,7 @@ export function ManagerDashboard() {
             : 0
         });
       } catch (error) {
+        console.error("ManagerDashboard: Failed to refresh manager dashboard data:", error);
         toast({
           title: "Error",
           description: "Failed to refresh manager dashboard data",
@@ -183,7 +262,7 @@ export function ManagerDashboard() {
                 <Users className="h-5 w-5" />
                 <span>Your Team</span>
               </div>
-              <Button>Evaluate Team Member</Button>
+              <Button onClick={handleEvaluateTeamMember}>Evaluate Team Member</Button>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -213,7 +292,7 @@ export function ManagerDashboard() {
                       >
                         Evaluate
                       </Button>
-                      <Button variant="ghost" size="sm">View Profile</Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleViewProfile(member.employeeId)}>View Profile</Button>
                     </div>
                   </div>
                 </div>
@@ -235,15 +314,15 @@ export function ManagerDashboard() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Button className="w-full">
+              <Button className="w-full" onClick={handleCreateTeamReport}>
                 <FileText className="h-4 w-4 mr-2" />
                 Create Team Report
               </Button>
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full" onClick={handleScheduleReviews}>
                 <Clock className="h-4 w-4 mr-2" />
                 Schedule Reviews
               </Button>
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full" onClick={handleViewTeamAnalytics}>
                 <TrendingUp className="h-4 w-4 mr-2" />
                 View Team Analytics
               </Button>

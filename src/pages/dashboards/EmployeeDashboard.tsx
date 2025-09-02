@@ -39,6 +39,7 @@ export function EmployeeDashboard() {
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
+      console.log("EmployeeDashboard: Starting employee data fetch for user:", user?.email);
       try {
         // Fetch appraisals for the current employee
         const appraisals = await api.getStaffAppraisals();
@@ -46,6 +47,8 @@ export function EmployeeDashboard() {
         // Filter appraisals for current user
         const myAppraisalsList = user?.email ? 
           await api.getAppraisalsByEmployee(user.email) : [];
+        
+        console.log("EmployeeDashboard: Appraisals loaded:", myAppraisalsList.length);
         
         const formattedAppraisals = myAppraisalsList.map((appraisal: any) => ({
           id: appraisal.id,
@@ -64,7 +67,9 @@ export function EmployeeDashboard() {
             ? formattedAppraisals.reduce((sum: number, a: any) => sum + (a.overallRating || 0), 0) / formattedAppraisals.length
             : 0
         });
+        console.log("EmployeeDashboard: Stats calculated:", { myAppraisals: formattedAppraisals.length });
       } catch (error) {
+        console.error("EmployeeDashboard: Failed to load employee dashboard data:", error);
         toast({
           title: "Error",
           description: "Failed to load employee dashboard data",
@@ -88,7 +93,36 @@ export function EmployeeDashboard() {
   };
 
   const handleNewAppraisal = () => {
+    console.log("EmployeeDashboard: New appraisal button clicked, navigating to appraisals page");
     navigate('/app/appraisals');
+  };
+
+  const handleViewGoals = () => {
+    console.log("EmployeeDashboard: View goals button clicked");
+    toast({
+      title: "Goals",
+      description: "Viewing your performance goals and objectives",
+    });
+    // Could navigate to a goals page in the future
+    // navigate('/app/goals');
+  };
+
+  const handleViewPerformance = () => {
+    console.log("EmployeeDashboard: View performance button clicked");
+    toast({
+      title: "Performance Analytics",
+      description: "Viewing your performance analytics and trends",
+    });
+    navigate('/app/calculations');
+  };
+
+  const handleViewAppraisalDetails = (appraisalId: number) => {
+    console.log("EmployeeDashboard: View appraisal details clicked for:", appraisalId);
+    toast({
+      title: "Appraisal Details",
+      description: `Viewing details for appraisal #${appraisalId}`,
+    });
+    // Could open a detailed modal or navigate to detailed view
   };
 
   if (loading) {
@@ -191,7 +225,7 @@ export function EmployeeDashboard() {
                         <p className="text-sm text-muted-foreground">Rating</p>
                       </div>
                     )}
-                    <Button variant="ghost" size="sm">View Details</Button>
+                    <Button variant="ghost" size="sm" onClick={() => handleViewAppraisalDetails(appraisal.id)}>View Details</Button>
                   </div>
                 </div>
               ))}
@@ -219,11 +253,11 @@ export function EmployeeDashboard() {
                 <FileText className="h-4 w-4 mr-2" />
                 Submit Appraisal
               </Button>
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full" onClick={handleViewGoals}>
                 <Target className="h-4 w-4 mr-2" />
                 View Goals
               </Button>
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full" onClick={handleViewPerformance}>
                 <TrendingUp className="h-4 w-4 mr-2" />
                 My Performance
               </Button>
